@@ -83,7 +83,7 @@ The `filter` program processes BMP images by applying one of four available imag
     * Uses a switch statement to direct control flow to the appropriate filter function from helpers.c.
 * Makefile:
     * The Makefile provides instructions to compile the program.
-    * Run make filter to compile the filter.c and helpers.c files into an executable named filter.
+    * Run make filter to compile the `filter.c` and `helpers.c` files into a binary executable named `filter`.
 
 #### Usage:
 * Compilation:
