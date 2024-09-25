@@ -77,7 +77,7 @@ The `filter` program processes BMP images by applying one of four available imag
     * Reflection
     * Blur
     * Edge Detection
-* Each function modifies the pixel values of the input BMP according to the specified filter.
+    * Each function modifies the pixel values of the input BMP according to the specified filter.
 * `filter.c`: Acts as the main entry point for the program.
     * Processes command-line arguments, reads the input BMP file, and applies the specified filter.
     * Uses a switch statement to direct control flow to the appropriate filter function from helpers.c.
