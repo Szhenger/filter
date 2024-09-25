@@ -87,7 +87,7 @@ The `filter` program processes BMP images by applying one of four available imag
 
 #### Usage:
 * Compilation:
-    * Compile the program using the command: `make filter`
+    * Compile the program using the command: `make filter`.
 * Run the Program:
     * Execute the command: `./filter input.bmp filrer_char`
         * `input.bmp`: The BMP file you want to apply the filter to.
