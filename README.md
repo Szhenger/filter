@@ -52,3 +52,35 @@ Implementation: The algorithm iterates through each row of the image and perform
     * The program operates efficiently even for large images by processing each pixel individually. While filters like grayscale and reflection involve simple calculations (i.e., averaging values or swapping pixels), filters like blur and edge detection require more complex operations that involve iterating over neighboring pixels, which can slow down performance for larger images. However, this design allows for accurate and visually appealing results.
 * Modularity and Extensibility:
     * The design of the program ensures that new filters can be added easily. The core image processing logic is isolated within `helpers.c`, while `filter.c` serves as the entry point that directs user input to the appropriate filtering function. This structure makes it easy to extend the program by adding new algorithms to `helpers.c` and updating the switch-case logic in `filter.c`.
+
+## Specification
+
+The `filter` program processes BMP images by applying one of four available image filters: grayscale, reflection, blur, or edge detection. It is executed through the command line, where users provide the input image and select a filter to apply. The program then outputs a new BMP image with the specified transformation.
+
+#### Input:
+* Command-line Arguments:
+    * The program accepts two command-line arguments:
+        * Input Image: A BMP file (.bmp) that the user wants to process.
+        * Filter Type: A single character representing the filter to apply:
+            * 'g' for grayscale
+            * 'r' for reflection
+            * 'b' for blur
+            * 'e' for edge detection
+         
+#### Output:
+* The output is a new BMP file with the applied filter, saved in the same directory as the input file.
+* The output file retains the BMP format and pixel dimensions of the input file, with its visual content modified according to the selected filter.
+
+#### File Structure:
+* `helpers.c`: Implements the core logic for each image filter.
+    * Grayscale
+    * Reflection
+    * Blur
+    * Edge Detection
+* Each function modifies the pixel values of the input BMP according to the specified filter.
+* `filter.c`: Acts as the main entry point for the program.
+    * Processes command-line arguments, reads the input BMP file, and applies the specified filter.
+    * Uses a switch statement to direct control flow to the appropriate filter function from helpers.c.
+* Makefile:
+    * The Makefile provides instructions to compile the program.
+    * Run make filter to compile the filter.c and helpers.c files into an executable named filter.
