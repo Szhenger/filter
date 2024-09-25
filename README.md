@@ -84,3 +84,32 @@ The `filter` program processes BMP images by applying one of four available imag
 * Makefile:
     * The Makefile provides instructions to compile the program.
     * Run make filter to compile the filter.c and helpers.c files into an executable named filter.
+
+#### Usage:
+* Compilation:
+    * Compile the program using the command: `make filter`
+* Run the Program:
+    * Execute the command: `./filter input.bmp filrer_char`
+        * `input.bmp`: The BMP file you want to apply the filter to.
+        * `filter_char`: One of the following characters to specify the filter:
+            * 'g': Grayscale
+            * 'r': Reflection
+            * 'b': Blur
+            * 'e': Edge Detection
+
+#### Error Handling:
+
+* The program handles various error scenarios:
+    * Invalid Command-line Arguments: If the required arguments are not provided or an invalid filter character is used, the program displays a usage message and exits.
+    * File Access Issues: If the input BMP file cannot be opened (e.g., due to incorrect file path or format), the program informs the user and exits gracefully.
+
+#### Performance Considerations:
+
+* The program operates on a pixel-by-pixel basis and is optimized for small to medium-sized BMP images.
+* For larger images, filters like blur and edge detection may take more time to process due to their dependence on neighboring pixel values, especially in the case of edge detection which involves computing pixel gradients.
+
+#### Limitations:
+
+* The program is specifically designed to handle BMP format images only. It does not support other image formats such as PNG, JPEG, or GIF.
+* The edge detection algorithm uses the Sobel operator, which may produce better results on high-contrast images. Low-contrast or noisy images may require pre-processing for optimal edge detection results.
+* The blur filter applies a simple box blur, which may not be suitable for images requiring more advanced smoothing techniques (e.g., Gaussian blur).
