@@ -12,7 +12,7 @@ This project implements basic image processing techniques and filters on BMP fil
 * Grayscale: Converting the image to black and white, or shades of grey.
 * Reflection: Flipping the image horizontally to mirror its content.
 * Blur: Smoothing the image by averaging the pixel values with neighboring pixels.
-* Edge Detection: Identifying the edges in the image using algorithms like Sobel.
+* Edge Detection: Identifying the edges in the image using algorithms like the Sobel operator.
 This project is particularly focused on processing BMP files due to the simplicity of their structure and their ability to be manipulated directly on a pixel-by-pixel basis. The algorithms implemented provide a foundation for understanding how pixel-based image manipulation works across various file types.
 
 ## Understanding
@@ -98,18 +98,19 @@ The `filter` program processes BMP images by applying one of four available imag
             * 'e': Edge Detection
 
 #### Error Handling:
-
 * The program handles various error scenarios:
     * Invalid Command-line Arguments: If the required arguments are not provided or an invalid filter character is used, the program displays a usage message and exits.
     * File Access Issues: If the input BMP file cannot be opened (e.g., due to incorrect file path or format), the program informs the user and exits gracefully.
 
 #### Performance Considerations:
-
 * The program operates on a pixel-by-pixel basis and is optimized for small to medium-sized BMP images.
 * For larger images, filters like blur and edge detection may take more time to process due to their dependence on neighboring pixel values, especially in the case of edge detection which involves computing pixel gradients.
 
 #### Limitations:
-
 * The program is specifically designed to handle BMP format images only. It does not support other image formats such as PNG, JPEG, or GIF.
 * The edge detection algorithm uses the Sobel operator, which may produce better results on high-contrast images. Low-contrast or noisy images may require pre-processing for optimal edge detection results.
 * The blur filter applies a simple box blur, which may not be suitable for images requiring more advanced smoothing techniques (e.g., Gaussian blur).
+
+## Credit
+
+This problem originated from [CS50's Introduction to Computer Science](https://cs50.harvard.edu/x/2024/psets/4/filter/more/) at Harvard University. Please note that the `filter.c` was developed by the CS50 Team.
