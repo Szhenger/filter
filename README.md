@@ -1,18 +1,54 @@
 # Filter
 
-#### Problem to Solve
+## Problem to Solve
 
-There are many file formats that support images; however, a simple and intuitive encoding are bitmaps such that images represented as a grid of pixels of binary value 0 or 1 to denote black and white respectively. For additional color, we can associate with each pixel instead of a bit, but a three-tuple of bytes that represent concentrations of red, green, or blue (RGB), i.e. 24 bits per pixel. For the sake of clarity, we present the RGB values in hexadecimal opposed to binary i.e. 0x00 vs 0b0. Please observe that many file formats such as BMP, JPEG, and PNG have similar interfaces or specifications for what the file contain; however, the implementation is different amoung these file formats. This repository stores files that apply image filters to BMPs.    
+There are many file formats that support images, such as BMP, JPEG, and PNG. Among these, bitmaps (BMP) are a simple and intuitive format for representing images as a grid of pixels. In black-and-white images, each pixel is typically represented by a binary value (0 for black, 1 for white). For color images, each pixel is represented by a three-tuple of bytes corresponding to the concentrations of red, green, and blue (RGB), using 24 bits per pixel. These RGB values are usually represented in hexadecimal format (e.g., `0x00` instead of binary `0b0`) for clarity.
 
-#### Description
+Despite sharing similar concepts, the various image file formats differ in implementation, leading to diverse challenges in processing them. This project focuses specifically on applying image filters to BMP files, transforming and enhancing them by altering their pixels through various algorithms. 
 
-Functionally, the set of files applies filter algorithms to input BMPs to produced output BMPs; however, the implementations are designed to be clear for the sake of correctness and style. In particular, the algorithms take each input file and modify each pixel in the bitmaps according to the interface of each algorithm. The repository has 4 filter algorithms that support grayscale, reflection, blur, and edge detection operations. For the greyscale algorithm, the specification is converting each pixel to a black-or-white encoding by averaging the RGB values for each pixel and map each pixel to a shade of grey that matches the value of the average. For the relection algorithm, apply a reverse procedure on each row of the bitmap to achieve the desired result of reflection. For the blur algorithm, it is worth noting that we need to apply a sliding window technique of a box around each input pixel by averaging each pixel in the surrounding area for the new value of the pixel. For the edge detection, applying the Sobel algorithm for weighted sums finds the edges in any box of pixels.      
+## Background
 
-#### Specification
+This project implements basic image processing techniques and filters on BMP files. Images, when stored in the BMP format, consist of pixel grids where each pixel holds RGB values. Modifying these pixels in various ways can result in common transformations like:
+* Grayscale: Converting the image to black and white, or shades of grey.
+* Reflection: Flipping the image horizontally to mirror its content.
+* Blur: Smoothing the image by averaging the pixel values with neighboring pixels.
+* Edge Detection: Identifying the edges in the image using algorithms like Sobel.
+This project is particularly focused on processing BMP files due to the simplicity of their structure and their ability to be manipulated directly on a pixel-by-pixel basis. The algorithms implemented provide a foundation for understanding how pixel-based image manipulation works across various file types.
 
-In helpers.c, we have filter algorithms such that grayscale takes an image and returns the image such that it is a black-and-white version of that same image, reflect takes an image and reflects it horizontally, blur takes an image and box-blur the image, and edges should highlight the edges between objects.
+## Understanding
 
-In filter.c, there is a main procedure that takes input images and characters at the commend-line to initate what filter algorithm should be applied and the resulting image shall apply the algorithm via the switch subroutine. 
+The `filter` program allows users to apply various image transformation filters to BMP files. Below is a detailed explanation of how the program is structured and how each filter works at a technical level, providing insights into the logic behind each image processing algorithm.
 
-In the Makefile, run make filter to compile the files to obtain the command ./filter input.bmp filter_char that runs the program to apply filters.
+#### Program Flow and Structure:
+* Command-Line Interface:
+    * The program is executed from the command line. Users provide the input BMP file and specify the filter they want to apply. The filter options are grayscale, reflection, blur, and edge detection.
+    * The filter is chosen through a single character (g for grayscale, r for reflection, b for blur, e for edges), which is passed as an argument alongside the input file. The program identifies the selected filter and processes the image accordingly.
+* Core Components:
+    * The program is divided into two main parts:
+        * helpers.c: This file contains the actual implementations of the image filters.
+        * filter.c: This file acts as the main controller of the program. It handles user input, reads the image file, and applies the appropriate filter using functions defined in helpers.c.
+    * Upon execution, the input BMP is loaded into memory, processed according to the specified filter, and then saved as an output BMP file with the filter applied.
 
+#### How Each Filter Works:
+* Grayscale:
+    * The grayscale filter converts a color image to black and white (shades of grey). Each pixel’s RGB values are averaged to compute a single intensity value that represents the brightness of that pixel. This average value is then assigned back to the red, green, and blue channels, resulting in a grayscale image.
+Implementation: The algorithm loops through each pixel in the image, calculates the average of its RGB values, and updates the pixel to reflect the computed grey value.
+* Reflection:
+    * This filter horizontally reflects the image, effectively flipping it like a mirror. For each row of pixels, the pixels on the leftmost side are swapped with the pixels on the rightmost side, progressively moving towards the center of the row.
+Implementation: The algorithm iterates through each row of the image and performs an in-place swap of the pixels from the edges towards the center.
+* Blur:
+    * The blur filter smooths the image by averaging the color values of each pixel and its neighboring pixels within a sliding window (typically 3x3). This results in a softened image where details are less sharp, as the variation in color intensity is reduced.
+    * Implementation: For each pixel, the algorithm calculates the average RGB values of the pixel and its surrounding neighbors. Since the surrounding pixels are taken into account, the algorithm must carefully handle edge cases at the borders of the image where fewer neighbors are available (e.g., pixels on the corners or edges).
+* Edge Detection:
+    * The edge detection filter highlights the edges in an image by identifying areas where there is a significant change in pixel intensity. This is done using the Sobel operator, which calculates the gradient of the pixel values in both the horizontal (x) and vertical (y) directions.
+    * Implementation: The algorithm applies two convolution kernels (one for horizontal and one for vertical gradients) to each pixel, computing the resulting gradient magnitude. The combination of the gradients produces an output where higher gradient values correspond to edges in the image. As with the blur algorithm, careful handling of edge cases is required when processing pixels at the image borders.
+
+#### Key Concepts in Image Processing:
+* Pixel-by-Pixel Manipulation:
+    * Each of the four filters operates by processing the image on a pixel-by-pixel basis. A BMP image is essentially a grid of pixels, where each pixel holds three values corresponding to the red, green, and blue color channels. By modifying these pixel values, we can achieve different visual effects like grayscale or edge detection.
+* Handling Image Boundaries:
+    * Filters such as blur and edge detection rely on neighboring pixels to compute the new pixel values. However, at the edges of an image (i.e., the pixels on the borders), some of these neighboring pixels don’t exist. The program accounts for this by either ignoring non-existent pixels or using only the available neighboring pixels for computation.
+* Performance Considerations:
+    * The program operates efficiently even for large images by processing each pixel individually. While filters like grayscale and reflection involve simple calculations (i.e., averaging values or swapping pixels), filters like blur and edge detection require more complex operations that involve iterating over neighboring pixels, which can slow down performance for larger images. However, this design allows for accurate and visually appealing results.
+* Modularity and Extensibility:
+    * The design of the program ensures that new filters can be added easily. The core image processing logic is isolated within helpers.c, while filter.c serves as the entry point that directs user input to the appropriate filtering function. This structure makes it easy to extend the program by adding new algorithms to helpers.c and updating the switch-case logic in filter.c.
