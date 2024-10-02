@@ -111,6 +111,6 @@ The `filter` program processes BMP images by applying one of four available imag
 * The edge detection algorithm uses the Sobel operator, which may produce better results on high-contrast images. Low-contrast or noisy images may require pre-processing for optimal edge detection results.
 * The blur filter applies a simple box blur, which may not be suitable for images requiring more advanced smoothing techniques (e.g., Gaussian blur).
 
-## Credit
+## Credit and Disclaimer
 
 This problem originated from [CS50's Introduction to Computer Science](https://cs50.harvard.edu/x/2024/psets/4/filter/more/) at Harvard University. Please note that the `filter.c` was developed by the CS50 Team and any solution here is explicitly for educational purposes only.
