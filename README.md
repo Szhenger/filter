@@ -113,4 +113,4 @@ The `filter` program processes BMP images by applying one of four available imag
 
 ## Credit
 
-This problem originated from [CS50's Introduction to Computer Science](https://cs50.harvard.edu/x/2024/psets/4/filter/more/) at Harvard University. Please note that the `filter.c` was developed by the CS50 Team.
+This problem originated from [CS50's Introduction to Computer Science](https://cs50.harvard.edu/x/2024/psets/4/filter/more/) at Harvard University. Please note that the `filter.c` was developed by the CS50 Team and any solution here is explicitly for educational purposes only.
